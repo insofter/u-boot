@@ -80,8 +80,8 @@
 #define	CONFIG_RED_LED		AT91_PIN_PA9	/* this is the power led */
 #define	CONFIG_GREEN_LED	AT91_PIN_PA6	/* this is the user led */
 
-#define CONFIG_BOOTDELAY	3
-
+#define CONFIG_BOOTDELAY	0
+#define CONFIG_ZERO_BOOTDELAY_CHECK
 /*
  * BOOTP options
  */
@@ -99,12 +99,13 @@
 #undef CONFIG_CMD_IMI
 #undef CONFIG_CMD_IMLS
 #undef CONFIG_CMD_LOADS
-#undef CONFIG_CMD_SOURCE
+//#undef CONFIG_CMD_SOURCE
 
 #define CONFIG_CMD_PING		1
 #define CONFIG_CMD_DHCP		1
 #define CONFIG_CMD_NAND		1
 #define CONFIG_CMD_USB		1
+//#define CONFIG_CMD_SOURCE       1
 
 /*
  * SDRAM: 1 bank, min 32, max 128 MB
@@ -160,7 +161,6 @@
 
 /* Ethernet */
 #define CONFIG_MACB			1
-//#define CONFIG_RMII			1
 #undef CONFIG_RMII
 #define CONFIG_NET_RETRY_COUNT		20
 #define CONFIG_RESET_PHY_R		1
@@ -211,12 +211,28 @@
 
 #else * CONFIG_SYS_USE_NANDFLASH *
 */
+
+
+#define CONFIG_CMD_MTDPARTS
+#define CONFIG_MTD_PARTITIONS
+#define CONFIG_MTD_DEVICE
+#define CONFIG_CMD_UBI
+#define CONFIG_RBTREE
+
+#define MTDIDS_DEFAULT   "nand0=icdtcp3_nand"
+#define MTDPARTS_DEFAULT "mtdparts=icdtcp3_nand:256k(at91bootstrap)," \
+                                       "512k(u-boot)," \
+                                       "1280k(u-boot-env)," \
+                                       "6144k(kernel)," \
+                                       "-(filesystems)"
+
 /* bootstrap + u-boot + env + linux in nandflash */
 #define CONFIG_ENV_IS_IN_NAND	1
-#define CONFIG_ENV_OFFSET		0x80000
-#define CONFIG_ENV_OFFSET_REDUND	0xc0000
+#define CONFIG_ENV_OFFSET		0xc0000
+#define CONFIG_ENV_OFFSET_REDUND	0x100000
 #define CONFIG_ENV_SIZE			0x40000		/* 1 sector = 256 kB */
-#define CONFIG_BOOTCOMMAND	"nand read 0x22000000 0x200000 0x200000; bootm"
+//#define CONFIG_BOOTCOMMAND	"nand read 0x22200000 0x200000 0x200000; bootm"
+#define CONFIG_BOOTCOMMAND	"tftp $loadaddr flasher-icdtcp3.img; source $loadaddr"
 /*#define CONFIG_BOOTARGS		"console=ttyS0,115200 "			\
 				"root=/dev/mtdblock5 "			\
 				"mtdparts=atmel_nand:128k(bootstrap)ro,"	\
@@ -228,8 +244,13 @@
                                 "console=ttyS0,115200 "                 \
                                 "ubi.mtd=4 "                            \
                                 "root=ubi0:rootfs "                     \
-                                "rootfstype=ubifs "                     \
-                                "init=/etc/preinit "
+                                "rootfstype=ubifs"
+
+#define CONFIG_ETHADDR 00:60:2F:26:E3:A2
+#define CONFIG_IPADDR 192.168.2.21
+#define CONFIG_NETMASK 255.255.255.0
+#define CONFIG_SERVERIP 192.168.2.200
+#define CONFIG_LOADADDR 0x22200000
 //#endif
 
 #define CONFIG_SYS_PROMPT		"U-Boot> "
