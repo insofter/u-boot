@@ -181,38 +181,6 @@
 #define CONFIG_SYS_MEMTEST_START		CONFIG_SYS_SDRAM_BASE
 #define CONFIG_SYS_MEMTEST_END			0x23e00000
 
-/*#ifdef CONFIG_SYS_USE_DATAFLASH_CS0
-
-* bootstrap + u-boot + env + linux in dataflash on CS0 *
-#define CONFIG_ENV_IS_IN_DATAFLASH	1
-#define CONFIG_SYS_MONITOR_BASE	(CONFIG_SYS_DATAFLASH_LOGIC_ADDR_CS0 + 0x8400)
-#define CONFIG_ENV_OFFSET		0x4200
-#define CONFIG_ENV_ADDR		(CONFIG_SYS_DATAFLASH_LOGIC_ADDR_CS0 + CONFIG_ENV_OFFSET)
-#define CONFIG_ENV_SIZE		0x4200
-#define CONFIG_BOOTCOMMAND	"cp.b 0xC0042000 0x22000000 0x210000; bootm"
-#define CONFIG_BOOTARGS		"console=ttyS0,115200 "			\
-				"root=/dev/mtdblock0 "			\
-				"mtdparts=atmel_nand:-(root) "		\
-				"rw rootfstype=jffs2"
-
-#elif CONFIG_SYS_USE_DATAFLASH_CS1
-
-* bootstrap + u-boot + env + linux in dataflash on CS1 *
-#define CONFIG_ENV_IS_IN_DATAFLASH	1
-#define CONFIG_SYS_MONITOR_BASE	(CONFIG_SYS_DATAFLASH_LOGIC_ADDR_CS1 + 0x8400)
-#define CONFIG_ENV_OFFSET		0x4200
-#define CONFIG_ENV_ADDR		(CONFIG_SYS_DATAFLASH_LOGIC_ADDR_CS1 + CONFIG_ENV_OFFSET)
-#define CONFIG_ENV_SIZE		0x4200
-#define CONFIG_BOOTCOMMAND	"cp.b 0xD0042000 0x22000000 0x210000; bootm"
-#define CONFIG_BOOTARGS		"console=ttyS0,115200 "			\
-				"root=/dev/mtdblock0 "			\
-				"mtdparts=atmel_nand:-(root) "		\
-				"rw rootfstype=jffs2"
-
-#else * CONFIG_SYS_USE_NANDFLASH *
-*/
-
-
 #define CONFIG_CMD_MTDPARTS
 #define CONFIG_MTD_PARTITIONS
 #define CONFIG_MTD_DEVICE
@@ -220,38 +188,22 @@
 #define CONFIG_RBTREE
 
 #define MTDIDS_DEFAULT   "nand0=icdtcp3_nand"
-#define MTDPARTS_DEFAULT "mtdparts=icdtcp3_nand:256k(at91bootstrap)," \
-                                       "512k(u-boot)," \
-                                       "1280k(u-boot-env)," \
-                                       "6144k(kernel)," \
-                                       "-(filesystems)"
+#define MTDPARTS_DEFAULT "mtdparts=icdtcp3_nand:512k(bootstrap),1536k(u-boot)," \
+                         "2m(u-boot-env),128m(system),-(data)"
 
 /* bootstrap + u-boot + env + linux in nandflash */
 #define CONFIG_ENV_IS_IN_NAND	1
-#define CONFIG_ENV_OFFSET		0xc0000
-#define CONFIG_ENV_OFFSET_REDUND	0x100000
-#define CONFIG_ENV_SIZE			0x40000		/* 1 sector = 256 kB */
-//#define CONFIG_BOOTCOMMAND	"nand read 0x22200000 0x200000 0x200000; bootm"
-#define CONFIG_BOOTCOMMAND	"tftp $loadaddr flasher-icdtcp3.img; source $loadaddr"
-/*#define CONFIG_BOOTARGS		"console=ttyS0,115200 "			\
-				"root=/dev/mtdblock5 "			\
-				"mtdparts=atmel_nand:128k(bootstrap)ro,"	\
-				"256k(uboot)ro,128k(env1)ro,"		\
-				"128k(env2)ro,2M(linux),-(root) "	\
-				"rw rootfstype=jffs2"
-*/
-#define CONFIG_BOOTARGS         "mem=64M "                              \
-                                "console=ttyS0,115200 "                 \
-                                "ubi.mtd=4 "                            \
-                                "root=ubi0:rootfs "                     \
-                                "rootfstype=ubifs"
+#define CONFIG_ENV_OFFSET		0x200000
+#define CONFIG_ENV_OFFSET_REDUND	0x300000
+#define CONFIG_ENV_SIZE			0x100000  /* 4 sectors x 256 kB */
+#define CONFIG_BOOTCOMMAND "tftp $loadaddr flasher-icdtcp3.img; source $loadaddr"
+#define CONFIG_BOOTARGS "mem=64M console=ttyS0,115200 ubi.mtd=3 root=ubi0:rootfs-a rootfstype=ubifs"
 
 #define CONFIG_ETHADDR 00:60:2F:26:E3:A2
 #define CONFIG_IPADDR 192.168.2.21
 #define CONFIG_NETMASK 255.255.255.0
 #define CONFIG_SERVERIP 192.168.2.200
 #define CONFIG_LOADADDR 0x22200000
-//#endif
 
 #define CONFIG_SYS_PROMPT		"U-Boot> "
 #define CONFIG_SYS_CBSIZE		256
@@ -272,3 +224,4 @@
 #endif
 
 #endif
+
