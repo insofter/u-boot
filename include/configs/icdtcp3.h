@@ -196,7 +196,7 @@
 #define CONFIG_ENV_OFFSET		0x200000
 #define CONFIG_ENV_OFFSET_REDUND	0x300000
 #define CONFIG_ENV_SIZE			0x100000  /* 4 sectors x 256 kB */
-#define CONFIG_BOOTCOMMAND "tftp $loadaddr flasher-icdtcp3.img; source $loadaddr"
+#define CONFIG_BOOTCOMMAND "tftp $loadaddr flash-script.img; source $loadaddr"
 #define CONFIG_BOOTARGS "mem=64M console=ttyS0,115200 ubi.mtd=3 root=ubi0:rootfs-a rootfstype=ubifs"
 
 #define CONFIG_ETHADDR 00:60:2F:26:E3:A2
