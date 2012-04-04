@@ -99,14 +99,12 @@
 #undef CONFIG_CMD_IMI
 #undef CONFIG_CMD_IMLS
 #undef CONFIG_CMD_LOADS
-//#undef CONFIG_CMD_SOURCE
 
 #define CONFIG_CMD_PING		1
 #define CONFIG_CMD_DHCP		1
 #define CONFIG_CMD_NAND		1
 #define CONFIG_CMD_USB		1
-//#define CONFIG_CMD_SOURCE       1
-
+#define CONFIG_VERSION_VARIABLE 1
 /*
  * SDRAM: 1 bank, min 32, max 128 MB
  * Initialized before u-boot gets started.
