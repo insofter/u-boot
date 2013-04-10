@@ -197,10 +197,10 @@
 #define CONFIG_BOOTCOMMAND "tftp $loadaddr flash-script.img; source $loadaddr"
 #define CONFIG_BOOTARGS "mem=64M console=ttyS0,115200 ubi.mtd=3 root=ubi0:rootfs-a rootfstype=ubifs"
 
-#define CONFIG_ETHADDR 00:60:2F:26:E3:A2
-#define CONFIG_IPADDR 192.168.2.21
+#define CONFIG_ETHADDR 00:1C:D3:00:00:00
+#define CONFIG_IPADDR 192.168.123.79
 #define CONFIG_NETMASK 255.255.255.0
-#define CONFIG_SERVERIP 192.168.2.200
+#define CONFIG_SERVERIP 192.168.123.70
 #define CONFIG_LOADADDR 0x22200000
 
 #define CONFIG_SYS_PROMPT		"U-Boot> "
